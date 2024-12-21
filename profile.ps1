@@ -2,8 +2,8 @@
 #
 # Powershell stuff
 #
-# NOTE: All of this assumes powershell 5.
-
+# - All of this assumes powershell 5.
+# - This config file is should be located at: "$Profile.CurrentUserAllHosts"
 
 # Aliases
 Set-Alias -name 'npp' -value 'C:\Program Files\Notepad++\notepad++.exe'
@@ -17,7 +17,7 @@ Function psver {
 
 # Edit profile
 Function ep {
-    Invoke-Expression (&npp $profile)
+    npp $Profile.CurrentUserAllHosts
 }
 
 # Reload profile

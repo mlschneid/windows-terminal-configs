@@ -7,6 +7,7 @@
 
 # Aliases
 Set-Alias -name 'npp' -value 'C:\Program Files\Notepad++\notepad++.exe'
+Set-Alias -name 'ex' -value 'explorer'
 
 # Show powershell version
 Function psver {
@@ -20,12 +21,17 @@ Function ep {
     npp $Profile.CurrentUserAllHosts
 }
 
+# Edit local profile
+Function elp {
+    npp $Profile.CurrentUserCurrentHost
+}
+
 # Reload profile
 # TODO: Fix bug where functions are cached, which prevents rapid iteration
 Function reload {
 	# Since we're using profile.ps1, just doing . $PROFILE won't work. By default
-	# $PROFILE points to some whacky filepath ($Profile.CurrentUserAllHosts). The following
-	# snippet reloads them all.
+	# $PROFILE points to $Profile.CurrentUserCurrentHost. The following snippet 
+	# reloads all files.
 	# https://stackoverflow.com/a/5501909
 	@(
         $Profile.AllUsersAllHosts,
@@ -57,7 +63,7 @@ Function touch {
     }
     else
     {
-		$directoryPath = Split-Path -Path $filePath
+		$directoryPath = [IO.Path]::GetFullPath($filePath) | Split-Path
 		$null = New-Item -ItemType Directory -Path $directoryPath -Force
         echo $null > $filePath
     }
